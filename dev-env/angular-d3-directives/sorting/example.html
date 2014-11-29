@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="/app/bower_components/underscore/underscore.js"></script>
+    <script src="/app/bower_components/d3/d3.js"></script>
+    <script src="/app/bower_components/angular/angular.js"></script>
+
+    <script src="sorting.js"></script>
+
+    <style>
+        .graph {
+            min-width: 70%;
+            float: left;
+        }
+        .plane {
+            width: 30%;
+            float: left;
+        }
+        .bar {
+            height: 10px;
+            background-color: blue;
+            border-bottom: 1px solid white;
+        }
+    </style>
+</head>
+<body ng-app="sorting" ng-controller="MainCtrl as main">
+    <div class="content">
+        <sort min="main.min" max="main.max" speed="main.speed" is-clicked="main.isClicked"></sort>
+        <div class="plane">
+            <label>
+                <span>min: </span>
+                <input type="text" placeholder="min" ng-model="main.min">
+            </label>
+            <label>
+                <span>max: </span>
+                <input type="text" placeholder="max" ng-model="main.max">
+            </label>
+            <label>
+                <span>speed: {{ main.speed }} ms</span>
+                <input type="range" min="10" max="1000" placeholder="speed" ng-model="main.speed">
+            </label>
+            <button ng-click="main.click()">Start</button>
+        </div>
+    </div>
+</body>
+</html>

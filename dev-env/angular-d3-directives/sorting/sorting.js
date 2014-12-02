@@ -26,6 +26,7 @@ app.directive('sort', ['$interval', function($interval) {
         var data = scope.data || _.shuffle(d3.range(min, max+1));
         var cache = data;
         var graph = d3.select(elem);
+        var lengths = d3.scale.linear();
 
         function swap( arr, a, b ) {
             var tmp = arr[a];
@@ -50,6 +51,7 @@ app.directive('sort', ['$interval', function($interval) {
                 $interval.cancel(stop);
                 stop = undefined;
             }
+            lengths.domain(d3.extent(data)).range([10, 90]);
             update();
         });
 
@@ -80,9 +82,15 @@ app.directive('sort', ['$interval', function($interval) {
                 .attr({
                     class: 'bar'
                 });
-            bars.style('width', function (d) {
-                return d + '%';
-            })
+            bars.style({
+                    "width": function (d) {
+                        return lengths(d) + '%';
+                    },
+                    "background-color": function (d) {
+                        return colors(d)
+                    }
+                }
+            );
         }
 
         function bubbleSort() {
